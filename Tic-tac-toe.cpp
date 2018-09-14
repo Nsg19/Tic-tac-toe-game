@@ -1,4 +1,5 @@
 #include<iostream>
+#include<unistd.h>
 #include<windows.h>
 using namespace std;
 int main()
@@ -23,13 +24,25 @@ int main()
 		cout<<"\t "<<disp_board[0]<<"\t"<<disp_board[1]<<"\t"<<disp_board[2]<<"\n";
 		cout<<"\t "<<disp_board[3]<<"\t"<<disp_board[4]<<"\t"<<disp_board[5]<<"\n";
 		cout<<"\t "<<disp_board[6]<<"\t"<<disp_board[7]<<"\t"<<disp_board[8]<<"\n";
-		cout<<"\n\t==================\n";
+		cout<<"\t==================\n";
 	
 	for(i=0;i<5;i++)
 	{
-		int flag=0;
+		int flag=0,MW=0;
 		cout<<"\n Human Player Move: ";
 		cin>>move;
+		if(disp_board[move]!='-')
+		{
+			cout<<"\n Wrong Move, Try Again...\n";
+			cout<<"\n Human Player Move: ";
+			cin>>move;	
+		}
+		if(move<0&&move>8)
+		{
+			cout<<"\n Wrong Move, Try Again...\n";
+			cout<<"\n Human Player Move: ";
+			cin>>move;
+		}
 		move=move-1;
 		disp_board[move]='X';
 		human[i]=board[move];
@@ -37,16 +50,16 @@ int main()
 		cout<<"\t "<<disp_board[0]<<"\t"<<disp_board[1]<<"\t"<<disp_board[2]<<"\n";
 		cout<<"\t "<<disp_board[3]<<"\t"<<disp_board[4]<<"\t"<<disp_board[5]<<"\n";
 		cout<<"\t "<<disp_board[6]<<"\t"<<disp_board[7]<<"\t"<<disp_board[8]<<"\n";
-		cout<<"\n\t==================\n";
+		cout<<"\t==================\n";
 		
 		cout<<"\nThinking...\n";
-		Sleep(1500);
+		Sleep(1000);
 		
 		if(i<1)
 		{
 			if(disp_board[4]=='-')
 			{
-				disp_board[4]='0';
+				int result=disp_board[4]='0';
 				system[i]=board[4];
 			}
 			
@@ -69,9 +82,9 @@ int main()
 			int sum=0,j,k,diff=0,sum1=0,diff1=0;
 			for(j=i;j>0;j--)
 			{
-				if(i>1)
+				if(j>1)
 					{
-						sum1=system[i-1]+system[j-2];
+						sum1=system[i-1]+system[j-2]; //Problem
 						diff1=15-sum1;
 						if(diff1>0&&diff1<=9)
 						{
@@ -87,6 +100,7 @@ int main()
 								disp_board[k]='0';
 								system[i]=board[k];
 								flag=1;
+								MW=1;
 								break;
 							}
 						}
@@ -164,8 +178,13 @@ int main()
 		cout<<"\t "<<disp_board[0]<<"\t"<<disp_board[1]<<"\t"<<disp_board[2]<<"\n";
 		cout<<"\t "<<disp_board[3]<<"\t"<<disp_board[4]<<"\t"<<disp_board[5]<<"\n";
 		cout<<"\t "<<disp_board[6]<<"\t"<<disp_board[7]<<"\t"<<disp_board[8]<<"\n";
-		cout<<"\n\t==================\n";
+		cout<<"\t==================\n";
+		if(MW==1)
+		{
+			cout<<"\n***************************** Machine Win *****************************\n";
+			
+			return 0;
+		}
 	}
 	cout<<"\n**************************** Match Draw ****************************\n";
-	
 }
