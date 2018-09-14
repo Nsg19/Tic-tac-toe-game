@@ -1,1 +1,1 @@
-It's a tic-tac game.
+It's a tic-tac game using AI Magic Square.
